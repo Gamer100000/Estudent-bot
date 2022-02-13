@@ -10,7 +10,7 @@ from tabulate import tabulate
 import getpass
 
 options = Options()
-options.headless = True
+options.headless = False
 driver = webdriver.Firefox(options=options)
 
 driver.get("http://10.240.1.89")
@@ -24,8 +24,8 @@ logged_in = False
 while not logged_in:
 	u_id = input("Id: ")
 	u_password = getpass.getpass("Password: ")
-	user_id.send_keys(u_id)
-	password.send_keys(u_password)
+	user_id.send_keys("u_id")
+	password.send_keys("u_password")
 	sign.click()
 	try:
 		error = driver.find_element (By.XPATH, "//div[contains( text(), 'Invalid login credentials. Please try again.')]")
@@ -44,6 +44,9 @@ ac_his.click()
 
 #Academic History
 time.sleep(delay)
+
+# Welcome Page
+#-------------
 
 def view_result(value):
 	driver.find_element(By.XPATH,f"//option[@value='{value}']").click() 

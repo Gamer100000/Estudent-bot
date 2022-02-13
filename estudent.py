@@ -46,23 +46,36 @@ def second(update, bot):
 
 def third(update, bot):
 	global user_password, user_id
-	print("I am third")
-	query = update.message
-	user_password = query.text
-	print(user_password)
+	logged_in = False
+	while  not logged_in:
+		print("I am third")
+		query = update.message
+		user_password = query.text
+		print(user_password)
+		status = estudent_login(user_id, user_password)
+		print(status)
+		if status:
+			keyboard = [
+				[InlineKeyboardButton(u"View Result", callback_data=str(FOURTH))]]
+			reply_markup = InlineKeyboardMarkup(keyboard)
+		
+			update.message.reply_text(
+			    u"Logged in Successfully",
+			    reply_markup=reply_markup
+			)
+			logged_in = True
+			return FOURTH
+		else:
+			keyboard = [
+				[InlineKeyboardButton(u"Login Agin", callback_data=str(FIRST))]]
+			reply_markup = InlineKeyboardMarkup(keyboard)
+			update.message.reply_text(u"Invalid ID or Password",
+				reply_markup=reply_markup)
+			logged_in = False
+			return FIRST
 
-	keyboard = [
-		[InlineKeyboardButton(u"View Result", callback_data=str(FOURTH))]]
-	reply_markup = InlineKeyboardMarkup(keyboard)
-	
-	print(estudent_login(user_id, user_password))
 
-	update.message.reply_text(
-	    u"Logged in Successfully",
-	    reply_markup=reply_markup
-	)
 
-	return FOURTH
 
 
 def fourth(update, bot):
